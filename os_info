@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Output file path
+output_file="/home/system_info.txt"
+
+# Get system information
+hostname=$(hostname)
+os=$(cat /etc/os-release)
+uptime=$(uptime -p)
+kernel=$(uname -r)
+cpu_info=$(lscpu)
+memory_info=$(free -h)
+ip_info=$(ip address)
+filesystem_info=$(df -h)
+error_logs=$(grep -i error /var/log/syslog | tail -n 5)
+
+# Write information to the output file
+echo "System Hostname: $hostname" > "$output_file"
+echo "Operating System: $os" >> "$output_file"
+echo "Uptime: $uptime" >> "$output_file"
+echo "Linux Kernel Version: $kernel" >> "$output_file"
+echo -e "\nCPU Information:\n$cpu_info" >> "$output_file"
+echo -e "\nMemory Information:\n$memory_info" >> "$output_file"
+echo -e "\nIP Information:\n$ip_info" >> "$output_file"
+echo -e "\nFilesystem Information:\n$filesystem_info" >> "$output_file"
+echo -e "\nLast 5 error logs:\n$error_logs" >> "$output_file"
+
+echo "System information has been gathered and saved to $output_file."
